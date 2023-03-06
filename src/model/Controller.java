@@ -11,8 +11,8 @@ public class Controller {
 	 * @param snakes
 	 * @param ladders
 	 */
-	public String generateGameBoard(int rows, int columns, int snakes, int ladders) {
-		return null;
+	public void generateGameBoard(int rows, int columns, int snakes, int ladders) {
+		gameBoard = new GameBoard(rows, columns, snakes, ladders);
 	}
 
 	public int rollDice() {
