@@ -12,9 +12,12 @@ public class Slot {
 	 * @param slotNumber
 	 */
 	public Slot(int slotNumber) {
-
+		this.slotNumber = slotNumber;
 	}
 
+	/**
+	 * @return Slot
+	 */
 	public Slot getPrevious() {
 		return previous;
 	}
@@ -45,6 +48,10 @@ public class Slot {
 
 	public String getLadder() {
 		return ladder;
+	}
+
+	public void setLadder(String ladder) {
+		this.ladder = ladder;
 	}
 
 }

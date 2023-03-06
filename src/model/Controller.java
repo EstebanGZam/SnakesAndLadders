@@ -15,6 +15,13 @@ public class Controller {
 		gameBoard = new GameBoard(rows, columns, snakes, ladders);
 	}
 
+	// public String printGameBoard() {
+		// return gameBoard.print();
+	// }
+
+	/**
+	 * @return int
+	 */
 	public int rollDice() {
 		return 0;
 	}

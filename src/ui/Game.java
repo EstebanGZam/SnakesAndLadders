@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 
 public class Game {
 
-	private static Controller controller;
+	private static Controller controller = new Controller();
 	private Scanner reader;
 
 	public Game() {
@@ -15,20 +15,24 @@ public class Game {
 
 	}
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
-		Game m = new Game();
-		int a = m.validateInteger();
+		// controller.generateGameBoard(4, 3, 1, 2);
+		// System.out.println(controller.printGameBoard());
+		// int a = m.validateInteger();
 		int option = 0;
 
-		do {
+		// do {
 
-			option = m.getOptionShowMenu();
-			m.executeOption(option);
+			// option = m.getOptionShowMenu();
+			// m.executeOption(option);
 
-		} while (option != 0);
+		// } while (option != 0);
 
-		m.getReader().close();
+		// m.getReader().close();
 	}
 
 	public int getOptionShowMenu() {
@@ -92,14 +96,13 @@ public class Game {
 	public void showSnakesAndLadders() {
 	}
 
-	public int validateInteger(){
+	public int validateInteger() {
 		int value = 0;
-		while (true){
-			try{
+		while (true) {
+			try {
 				value = reader.nextInt();
 				break;
-			}
-			catch (InputMismatchException ie){
+			} catch (InputMismatchException ie) {
 				System.out.println("Invalid input!. Try again fool");
 				reader.next();
 				continue;
@@ -108,7 +111,8 @@ public class Game {
 
 		return value;
 	}
-	public Scanner getReader(){
+
+	public Scanner getReader() {
 		return reader;
 	}
 
