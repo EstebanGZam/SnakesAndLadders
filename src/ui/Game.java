@@ -20,8 +20,8 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 
-		// controller.generateGameBoard(4, 3, 1, 2);
-		// System.out.println(controller.printGameBoard());
+		controller.generateGameBoard(4, 3, 1, 2);
+		System.out.println(controller.printGameBoard());
 		// int a = m.validateInteger();
 		int option = 0;
 

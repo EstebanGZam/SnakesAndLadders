@@ -15,9 +15,9 @@ public class Controller {
 		gameBoard = new GameBoard(rows, columns, snakes, ladders);
 	}
 
-	// public String printGameBoard() {
-		// return gameBoard.print();
-	// }
+	public String printGameBoard() {
+		return gameBoard.print();
+	}
 
 	/**
 	 * @return int

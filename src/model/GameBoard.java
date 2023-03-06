@@ -109,7 +109,7 @@ public class GameBoard {
 	}
 
 	private int ladderFloorValue(char value, int end) {
-		int ladderFloorValue = 2 + random.nextInt(end - 1);
+		int ladderFloorValue = 2 + random.nextInt(end - 2);
 		Slot ladderFloor = search(ladderFloorValue);
 		if (ladderFloor.getLadder() == null && ladderFloor.getSnake() == null) {
 			ladderFloor.setLadder(value + "1");
@@ -128,29 +128,19 @@ public class GameBoard {
 			return ladderCeilValue(value, from, end);
 	}
 
-	/*
-	 * public String print() {
-	 * return print(this.head);
-	 * }
-	 * 
-	 * private String print(Slot current) {
-	 * if (this.head == null) {
-	 * return "Empty list.";
-	 * }
-	 * if (current == this.tail) {
-	 * return this.tail.getSlotNumber() + "";
-	 * }
-	 * if (current.getSnake() != null) {
-	 * return current.getSlotNumber() + " " + current.getSnake() + "\n" +
-	 * print(current.getNext());
-	 * } else if (current.getLadder() != null) {
-	 * return current.getSlotNumber() + " " + current.getLadder() + "\n" +
-	 * print(current.getNext());
-	 * } else {
-	 * return current.getSlotNumber() + "\n" + print(current.getNext());
-	 * }
-	 * }
-	 */
+	public String print() {
+		return print(this.tail);
+	}
+
+	private String print(Slot current) {
+		if (this.head == null) {
+			return "[]";
+		}
+		if (current == this.head) {
+			return "[ " + this.head.getSlotNumber() + " ]";
+		}
+		return "[ " + current.getSlotNumber() + " ] " + print(current.getPrevious());
+	}
 
 	/**
 	 * 
