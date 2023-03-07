@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class GameBoard {
 
-	private Slot head;
-	private Slot tail;
+	private Slot head, tail;
+	private int rows, columns;
 	private Random random = new Random();
 
 	/**
@@ -16,6 +16,8 @@ public class GameBoard {
 	 * @param ladders
 	 */
 	public GameBoard(int rows, int columns, int snakes, int ladders) {
+		this.rows = rows;
+		this.columns = columns;
 		int numberOfSlots = rows * columns;
 		addSlots(numberOfSlots);
 		addSnakes(snakes);
@@ -109,7 +111,7 @@ public class GameBoard {
 	}
 
 	private int ladderFloorValue(char value, int end) {
-		int ladderFloorValue = 2 + random.nextInt(end - 2);
+		int ladderFloorValue = 2 + random.nextInt(end - 3);
 		Slot ladderFloor = search(ladderFloorValue);
 		if (ladderFloor.getLadder() == null && ladderFloor.getSnake() == null) {
 			ladderFloor.setLadder(value + "1");
@@ -129,17 +131,35 @@ public class GameBoard {
 	}
 
 	public String print() {
-		return print(this.tail);
+		if (this.head == null)
+			return "[]";
+		int end = this.tail.getSlotNumber();
+		return print(this.tail, rows, end, end - columns);
 	}
 
-	private String print(Slot current) {
-		if (this.head == null) {
-			return "[]";
-		}
-		if (current == this.head) {
-			return "[ " + this.head.getSlotNumber() + " ]";
-		}
-		return "[ " + current.getSlotNumber() + " ] " + print(current.getPrevious());
+	private String print(Slot current, int row, int fromIndex, int toIndex) {
+		if (row == 0)
+			return "";
+		Slot slotNextRow = search(current.getSlotNumber() - columns);
+		if (row % 2 != 0)
+			return printReverseRow(current, fromIndex, toIndex) + "\n"
+					+ print(slotNextRow, --row, fromIndex - columns, toIndex - columns);
+		else
+			return printRow(current, fromIndex, toIndex) + "\n"
+					+ print(slotNextRow, --row, fromIndex - columns, toIndex - columns);
+	}
+
+	public String printRow(Slot current, int fromIndex, int toIndex) {
+		if (fromIndex - 1 == toIndex)
+			return "[ " + current.getSlotNumber() + " ]";
+		return "[ " + current.getSlotNumber() + " ] " + printRow(current.getPrevious(), --fromIndex, toIndex);
+	}
+
+	public String printReverseRow(Slot current, int fromIndex, int toIndex) {
+		if (fromIndex - 1 == toIndex)
+			return "[ " + current.getSlotNumber() + " ]";
+		return printReverseRow(current.getPrevious(), --fromIndex, toIndex) + " [ " + current.getSlotNumber() + " ]";
+
 	}
 
 	/**
