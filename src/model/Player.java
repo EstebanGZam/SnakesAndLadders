@@ -3,12 +3,55 @@ package model;
 public class Player {
 
 	private Slot slot;
-	private Symbol symbol;
+	private char symbol;
 
-	public Player() {
+	// El numero debe estar entre 1 y 9
+	public Player(Slot slot, int number) {
+		this.slot = slot;
+		setRandomSymbol(number);
 	}
 
-	public void setRandomSymbol() {
+	public Slot getSlot() {
+		return slot;
+	}
+
+	public char getSymbol() {
+		return this.symbol;
+	}
+
+	public void setRandomSymbol(int number) {
+		switch (number) {
+			case 1:
+				this.symbol = '*';
+				break;
+			case 2:
+				this.symbol = '!';
+				break;
+			case 3:
+				this.symbol = 'O';
+				break;
+			case 4:
+				this.symbol = 'X';
+				break;
+			case 5:
+				this.symbol = '%';
+				break;
+			case 6:
+				this.symbol = '$';
+				break;
+			case 7:
+				this.symbol = '#';
+				break;
+			case 8:
+				this.symbol = '+';
+				break;
+			case 9:
+				this.symbol = '&';
+				break;
+			default:
+				this.symbol = '^';
+				break;
+		}
 	}
 
 }

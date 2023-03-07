@@ -5,6 +5,7 @@ import java.util.Random;
 public class GameBoard {
 
 	private Slot head, tail;
+	private Player player1, player2, player3;
 	private int rows, columns;
 	private Random random = new Random();
 
@@ -20,8 +21,21 @@ public class GameBoard {
 		this.columns = columns;
 		int numberOfSlots = rows * columns;
 		addSlots(numberOfSlots);
+		String symbols = generateRandomSymbols();
+		player1 = new Player(this.head, Character.getNumericValue(symbols.charAt(0)));
+		player2 = new Player(this.head, Character.getNumericValue(symbols.charAt(1)));
+		player3 = new Player(this.head, Character.getNumericValue(symbols.charAt(2)));
 		addSnakes(snakes);
 		addLadders(ladders);
+	}
+
+	public String generateRandomSymbols() {
+		int a = 1 + random.nextInt(9);
+		int b = 1 + random.nextInt(9);
+		int c = 1 + random.nextInt(9);
+		if (a == b || b == c || c == a)
+			return generateRandomSymbols();
+		return a + "" + b + "" + c;
 	}
 
 	/**
@@ -127,7 +141,7 @@ public class GameBoard {
 			ladderCeil.setLadder(value + "2");
 			return ladderCeilValue;
 		} else
-			return ladderCeilValue(value, from, end);
+			return ladderCeilValue(value, from, end); // corregir esta linea
 	}
 
 	public String print() {
@@ -151,15 +165,31 @@ public class GameBoard {
 
 	public String printRow(Slot current, int fromIndex, int toIndex) {
 		if (fromIndex - 1 == toIndex)
-			return "[ " + current.getSlotNumber() + " ]";
-		return "[ " + current.getSlotNumber() + " ] " + printRow(current.getPrevious(), --fromIndex, toIndex);
+			return "[ " + printSlot(current) + "]";
+		return "[ " + printSlot(current) + "] " + printRow(current.getPrevious(), --fromIndex, toIndex);
 	}
 
 	public String printReverseRow(Slot current, int fromIndex, int toIndex) {
 		if (fromIndex - 1 == toIndex)
-			return "[ " + current.getSlotNumber() + " ]";
-		return printReverseRow(current.getPrevious(), --fromIndex, toIndex) + " [ " + current.getSlotNumber() + " ]";
+			return "[ " + printSlot(current) + "]";
+		return printReverseRow(current.getPrevious(), --fromIndex, toIndex) + " [ " + printSlot(current) + "]";
+	}
 
+	public String printSlot(Slot current) {
+		String msg = current.getSlotNumber() + " ";
+		if (player1.getSlot().equals(current)) {
+			msg += player1.getSymbol();
+		}
+		if (player2.getSlot().equals(current)) {
+			msg += player2.getSymbol();
+		}
+		if (player3.getSlot().equals(current)) {
+			msg += player3.getSymbol();
+		}
+		if (!msg.equals(current.getSlotNumber() + " ")) {
+			msg += " ";
+		}
+		return msg;
 	}
 
 	/**
