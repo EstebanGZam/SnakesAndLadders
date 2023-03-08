@@ -6,29 +6,33 @@ import java.util.InputMismatchException;
 
 public class Game {
 
-	private static Controller controller;
+	private static Controller controller = new Controller();
 	private Scanner reader;
+	private static Game game = new Game();
 
 	public Game() {
 		controller = new Controller();
 		reader = new Scanner(System.in);
-
 	}
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
-		Game m = new Game();
-		int a = m.validateInteger();
-		int option = 0;
+		controller.generateGameBoard(10, 10, 0, 0);
+		System.out.println(controller.printGameBoard());
+		game.displayMenu();
+	}
 
-		do {
-
-			option = m.getOptionShowMenu();
-			m.executeOption(option);
-
-		} while (option != 0);
-
-		m.getReader().close();
+	public void displayMenu() {
+		int option = getOptionShowMenu();
+		if (option == 0){
+			executeOption(option);
+			return;
+		}
+		executeOption(option);
+		displayMenu();
 	}
 
 	public int getOptionShowMenu() {
@@ -49,22 +53,17 @@ public class Game {
 			case 1:
 				generateBoard();
 				break;
-
 			case 2:
-				;
+				// printGameBoard();
 				break;
-
 			case 3:
-				;
+				movePlayer();
 				break;
-
 			case 4:
 				break;
-
 			case 0:
 				System.out.println("Exit program.");
 				break;
-
 			default:
 				System.out.println("Invalid Option");
 				break;
@@ -72,13 +71,13 @@ public class Game {
 	}
 
 	public void generateBoard() {
-		System.out.println("Type number of game board columns:");
+		System.out.print("Columns: ");
 		int columns = validateInteger();
-		System.out.println("Type number of game board rows:");
+		System.out.print("Rows: ");
 		int rows = validateInteger();
-		System.out.println("Type number of snakes to game:");
+		System.out.print("Snakes: ");
 		int snakes = validateInteger();
-		System.out.println("Type number of ladders to game:");
+		System.out.print("Ladders: ");
 		int ladders = validateInteger();
 		controller.generateGameBoard(rows, columns, snakes, ladders);
 	}
@@ -87,19 +86,25 @@ public class Game {
 	}
 
 	public void printGameBoard() {
+		System.out.println(controller.printGameBoard());
 	}
 
 	public void showSnakesAndLadders() {
 	}
 
-	public int validateInteger(){
+	public void movePlayer(){
+		System.out.println(controller.rollDice());
+		System.out.println(controller.printGameBoard());
+	}
+
+	public int validateInteger() {
 		int value = 0;
-		while (true){
-			try{
+		while (true) {
+			try {
 				value = reader.nextInt();
+				reader.nextLine();
 				break;
-			}
-			catch (InputMismatchException ie){
+			} catch (InputMismatchException ie) {
 				System.out.println("Invalid input!. Try again fool");
 				reader.next();
 				continue;
@@ -107,9 +112,6 @@ public class Game {
 		}
 
 		return value;
-	}
-	public Scanner getReader(){
-		return reader;
 	}
 
 }

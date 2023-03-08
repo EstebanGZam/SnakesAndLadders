@@ -11,12 +11,27 @@ public class Controller {
 	 * @param snakes
 	 * @param ladders
 	 */
-	public String generateGameBoard(int rows, int columns, int snakes, int ladders) {
-		return null;
+	public void generateGameBoard(int rows, int columns, int snakes, int ladders) {
+		gameBoard = new GameBoard(rows, columns, snakes, ladders);
 	}
 
-	public int rollDice() {
-		return 0;
+	public String printGameBoard() {
+		return gameBoard.print();
+	}
+
+	/**
+	 * @return int
+	 */
+	public String rollDice() {
+		int dice = gameBoard.rollDice();
+		String msj = "";
+		if (gameBoard.getCurrentPlayer() == 1) {
+			msj = "Player 3 rolled: " + dice;
+		}else{
+			msj = "Player " + (gameBoard.getCurrentPlayer()-1) + " rolled: " + dice;
+		}
+
+		return msj;
 	}
 
 	public void addLadders() {
