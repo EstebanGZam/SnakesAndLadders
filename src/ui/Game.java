@@ -2,17 +2,21 @@ package ui;
 
 import java.util.Scanner;
 import model.Controller;
+import model.GameExceptions;
+
 import java.util.InputMismatchException;
 
 public class Game {
 
-	private static Controller controller = new Controller();
+	private static Controller controller;
+	private static GameExceptions exc = new GameExceptions();
 	private Scanner reader;
 	private static Game game = new Game();
 
 	public Game() {
 		controller = new Controller();
 		reader = new Scanner(System.in);
+		exc = new GameExceptions();
 	}
 
 	/**
@@ -65,12 +69,17 @@ public class Game {
 	}
 
 	public void generateBoard() {
+
 		System.out.print("Columns: ");
 		int columns = validateInteger();
+
 		System.out.print("Rows: ");
 		int rows = validateInteger();
+
 		System.out.print("Snakes: ");
 		int snakes = validateInteger();
+
+
 		System.out.print("Ladders: ");
 		int ladders = validateInteger();
 		controller.generateGameBoard(rows, columns, snakes, ladders);
@@ -86,6 +95,26 @@ public class Game {
 	public void showSnakesAndLadders() {
 	}
 
+	public int checkExceptions(int option, boolean rep) {
+		int value = 0;
+		rep = true;
+		if (!rep && option == 0){
+			try {
+
+				value = reader.nextInt();
+				reader.nextLine();
+				exc.checkNonExceptions(value,option);
+
+
+			} catch (Exception exceptions) {
+
+				System.out.println(exceptions);
+				reader.next();
+				checkExceptions(0,false);
+			}
+		}
+		return value;
+	}
 	public int validateInteger() {
 		int value = 0;
 		while (true) {
