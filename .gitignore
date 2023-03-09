@@ -1,6 +1,8 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/.idea/
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,intellij
