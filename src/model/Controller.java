@@ -5,7 +5,7 @@ public class Controller {
 	private GameBoard gameBoard;
 
 	/**
-	 * 
+	 *
 	 * @param rows
 	 * @param columns
 	 * @param snakes
@@ -22,8 +22,16 @@ public class Controller {
 	/**
 	 * @return int
 	 */
-	public int rollDice() {
-		return 0;
+	public String rollDice() {
+		int dice = gameBoard.rollDice();
+		String msj = "";
+		if (gameBoard.getCurrentPlayer() == 1) {
+			msj = "Player 3 rolled: " + dice;
+		}else{
+			msj = "Player " + (gameBoard.getCurrentPlayer()-1) + " rolled: " + dice;
+		}
+
+		return msj;
 	}
 
 	public void addLadders() {

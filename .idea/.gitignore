@@ -2,8 +2,8 @@
 /shelf/
 /workspace.xml
 
-# Created by https://www.toptal.com/developers/gitignore/api/intellij
-# Edit at https://www.toptal.com/developers/gitignore?templates=intellij
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,intellij
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -117,3 +117,24 @@ fabric.properties
 # Azure Toolkit for IntelliJ plugin
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/ap

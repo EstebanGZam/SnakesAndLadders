@@ -9,8 +9,10 @@ public class GameBoard {
 	private int rows, columns;
 	private Random random = new Random();
 
+	private int currentPlayer;
+
 	/**
-	 * 
+	 *
 	 * @param rows
 	 * @param columns
 	 * @param snakes
@@ -25,8 +27,17 @@ public class GameBoard {
 		player1 = new Player(this.head, Character.getNumericValue(symbols.charAt(0)));
 		player2 = new Player(this.head, Character.getNumericValue(symbols.charAt(1)));
 		player3 = new Player(this.head, Character.getNumericValue(symbols.charAt(2)));
+		currentPlayer = 1;
 		addSnakes(snakes);
 		addLadders(ladders);
+	}
+
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 	public String generateRandomSymbols() {
@@ -192,13 +203,51 @@ public class GameBoard {
 		return msg;
 	}
 
+
+
+	public int rollDice(){
+		int dice = 1+random.nextInt(6);
+		if(this.currentPlayer == 1){
+			movePlayer(player1, dice);
+		}else if (this.currentPlayer == 2){
+			System.out.println("Entre a mover al player 2");
+			movePlayer(player2, dice);
+		}else if(this.currentPlayer == 3){
+			movePlayer(player3, dice);
+		}
+
+		if (this.currentPlayer == 3) {
+			setCurrentPlayer(1);
+		} else{
+			setCurrentPlayer(this.currentPlayer + 1);
+		}
+		return dice;
+	}
+
 	/**
-	 * 
+	 *
 	 * @param player
 	 * @param diceNumber
 	 */
+
 	public void movePlayer(Player player, int diceNumber) {
+		if(diceNumber == 0){
+			return;
+		} else if (player.getSlot().getSlotNumber() >= this.tail.getSlotNumber()-6) {
+			if (player.getSlot().getSlotNumber() + diceNumber > this.tail.getSlotNumber()) {
+				return;
+			}
+		}
+		player.setSlot(player.getSlot().getNext());
+		diceNumber--;
+		movePlayer(player, diceNumber);
+		return;
 	}
+
+	/*public void movePlayer(Player player, int diceNumber) {
+		int newNumberSlot = player.getSlot().getSlotNumber() + diceNumber;
+		player.setSlot(search(newNumberSlot));
+	}*/
 
 	public void useSnake() {
 	}
