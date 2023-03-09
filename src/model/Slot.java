@@ -8,7 +8,7 @@ public class Slot {
 	private String ladder;
 
 	/**
-	 * 
+	 *
 	 * @param slotNumber
 	 */
 	public Slot(int slotNumber) {

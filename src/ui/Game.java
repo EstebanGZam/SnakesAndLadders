@@ -9,13 +9,19 @@ public class Game {
 
 	private static Controller controller = new Controller();
 	private Scanner reader;
+<<<<<<< HEAD
 	private GameExceptions gameExcept;
+=======
+>>>>>>> c4fb858f4f6dec93d2514a94f1c06a78a69b3353
 	private static Game game = new Game();
 
 	public Game() {
 		controller = new Controller();
 		reader = new Scanner(System.in);
+<<<<<<< HEAD
 		gameExcept = new GameExceptions();
+=======
+>>>>>>> c4fb858f4f6dec93d2514a94f1c06a78a69b3353
 	}
 
 	/**
@@ -74,6 +80,7 @@ public class Game {
 	}
 
 	public void generateBoard() {
+<<<<<<< HEAD
 		int rows = 0;
 		int columns = 0;
 		int snakes = 0;
@@ -94,6 +101,16 @@ public class Game {
 		System.out.print("Ladders: ");
 		ladders = (int) gameExcept.validateInput( snakes, 0);
 
+=======
+		System.out.print("Columns: ");
+		int columns = validateInteger();
+		System.out.print("Rows: ");
+		int rows = validateInteger();
+		System.out.print("Snakes: ");
+		int snakes = validateInteger();
+		System.out.print("Ladders: ");
+		int ladders = validateInteger();
+>>>>>>> c4fb858f4f6dec93d2514a94f1c06a78a69b3353
 		controller.generateGameBoard(rows, columns, snakes, ladders);
 	}
 
