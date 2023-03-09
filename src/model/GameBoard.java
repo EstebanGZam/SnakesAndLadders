@@ -8,8 +8,8 @@ public class GameBoard {
 	private Player player1, player2, player3;
 	private int rows, columns;
 	private Random random = new Random();
-
 	private int currentPlayer;
+	private boolean isWinner;
 
 	/**
 	 * 
@@ -20,6 +20,7 @@ public class GameBoard {
 	 */
 	public GameBoard(int rows, int columns, int snakes, int ladders) {
 		this.rows = rows;
+		this.isWinner = false;
 		this.columns = columns;
 		int numberOfSlots = rows * columns;
 		addSlots(numberOfSlots);
@@ -32,6 +33,9 @@ public class GameBoard {
 		addLadders(ladders);
 	}
 
+	public boolean getIsWinner(){
+		return this.isWinner;
+	}
 	public int getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -203,17 +207,19 @@ public class GameBoard {
 		return msg;
 	}
 
-
+	/**
+	 * rollDice: Select random number, call movePlayer method to current player and refresh the current player
+	 * @return int dice: Represent dice number
+	 */
 
 	public int rollDice(){
 		int dice = 1+random.nextInt(6);
 		if(this.currentPlayer == 1){
-			movePlayer(player1, dice);
+			this.isWinner = movePlayer(player1, dice);
 		}else if (this.currentPlayer == 2){
-			System.out.println("Entre a mover al player 2");
-			movePlayer(player2, dice);
+			this.isWinner = movePlayer(player2, dice);
 		}else if(this.currentPlayer == 3){
-			movePlayer(player3, dice);
+			this.isWinner = movePlayer(player3, dice);
 		}
 
 		if (this.currentPlayer == 3) {
@@ -225,29 +231,35 @@ public class GameBoard {
 	}
 
 	/**
-	 *
+	 * movePLayer: Change the aim of the current player slot by slot to the new position
 	 * @param player
 	 * @param diceNumber
 	 */
 
-	public void movePlayer(Player player, int diceNumber) {
-		if(diceNumber == 0){
-			return;
-		} else if (player.getSlot().getSlotNumber() >= this.tail.getSlotNumber()-6) {
-			if (player.getSlot().getSlotNumber() + diceNumber > this.tail.getSlotNumber()) {
-				return;
-			}
+	public boolean movePlayer(Player player, int diceNumber) {
+		if(player.getSlot().getSlotNumber() == this.tail.getSlotNumber() && diceNumber == 0){
+			return true;
+		} else if (player.getSlot().getSlotNumber() == this.tail.getSlotNumber() && diceNumber != 0) {
+			bouncePlayer(player, diceNumber);
+			return false;
+		} else if(diceNumber == 0){
+			return false;
 		}
 		player.setSlot(player.getSlot().getNext());
 		diceNumber--;
-		movePlayer(player, diceNumber);
-		return;
+		return movePlayer(player, diceNumber);
+
 	}
 
-	/*public void movePlayer(Player player, int diceNumber) {
-		int newNumberSlot = player.getSlot().getSlotNumber() + diceNumber;
-		player.setSlot(search(newNumberSlot));
-	}*/
+	private void bouncePlayer(Player player, int diceNumber){
+		if(diceNumber == 0){
+			return;
+		}
+		player.setSlot(player.getSlot().getPrevious());
+		diceNumber--;
+		bouncePlayer(player, diceNumber);
+		return;
+	}
 
 	public void useSnake() {
 	}
