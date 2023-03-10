@@ -131,7 +131,7 @@ public class GameBoard {
 	 * <b>Description:</b> Recursive method used to search a slot in the game board.
 	 * <br>
 	 *
-	 * @param value Value of the searched slot.
+	 * @param slotNumber Value of the searched slot.
 	 * @return Slot found.
 	 */
 	public Slot search(Slot current, int slotNumber) {
