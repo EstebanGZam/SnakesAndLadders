@@ -19,9 +19,9 @@ public class Game {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
-		// controller.generateGameBoard(10, 10, 0, 0);
-		// System.out.println(controller.printGameBoard())
+		controller.generateGameBoard(10, 10, 5, 3);
+		System.out.println(controller.printGameBoard());
+		System.out.println(controller.printSnakesAndLadders());
 		game.displayMenu();
 	}
 
@@ -30,6 +30,9 @@ public class Game {
 		displayMenu();
 	}
 
+	/**
+	 * @return int
+	 */
 	public int getOptionShowMenu() {
 		int option = 0;
 		System.out.println("<<<<< Snakes and Ladders >>>>>");
@@ -43,6 +46,9 @@ public class Game {
 		return option;
 	}
 
+	/**
+	 * @param option
+	 */
 	public void executeOption(int option) {
 		switch (option) {
 			case 1:

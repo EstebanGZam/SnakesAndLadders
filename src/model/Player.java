@@ -11,10 +11,18 @@ public class Player {
 		setRandomSymbol(number);
 	}
 
+	
+	/** 
+	 * @return Slot
+	 */
 	public Slot getSlot() {
 		return slot;
 	}
 
+	
+	/** 
+	 * @return char
+	 */
 	public char getSymbol() {
 		return this.symbol;
 	}
