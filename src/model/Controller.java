@@ -22,8 +22,7 @@ public class Controller {
 		return gameBoard.printSlots();
 	}
 
-	
-	/** 
+	/**
 	 * @return String
 	 */
 	public String printSnakesAndLadders() {
@@ -32,42 +31,35 @@ public class Controller {
 
 	/**
 	 * rollDice: Extracts the result of the launch and organizes it in a message.
-	 * @return String msj: Message that inform to current player result of roll dice.
+	 * 
+	 * @return String msj: Message that inform to current player result of roll
+	 *         dice.
 	 */
 	public String rollDice() {
-		int dice = gameBoard.rollDice();
-		String msj = "";
-		if (gameBoard.getCurrentPlayer() == 1) {
-			msj = "Player 3 rolled: " + dice;
-		}else{
-			msj = "Player " + (gameBoard.getCurrentPlayer()-1) + " rolled: " + dice;
+		String msg = gameBoard.rollDice();
+		if (matchFinished()) {
+			addScoreRegistry(gameBoard.getMatchScore());
+			msg += printScoreBoard();
 		}
-		if (gameBoard.getIsWinner() == true) {
-			msj += "\n Match finishes. This player is the winner.";
-		}
-
-		return msj;
+		return msg;
 	}
 
-	public void addLadders() {
+	public String displaySecondaryMethod() {
+		return "Player " + gameBoard.getCurrentPlayer().getSymbol()
+				+ ", is your turn.\n1) Roll dice.\n2) See ladders and snakes\nOption: ";
 	}
 
-	public void addSnakes() {
+	public boolean matchFinished() {
+		if (gameBoard.getMatchScore() != 0)
+			return true;
+		return false;
 	}
 
-	public void movePlayer() {
+	private void addScoreRegistry(long matchScore) {
 	}
 
-	public String refreshGameBoard() {
+	private String printScoreBoard() {
 		return null;
-	}
-
-	public String showSnakesAndLadders() {
-		return null;
-	}
-
-	public double calculateScore() {
-		return 0.0;
 	}
 
 }
