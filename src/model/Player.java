@@ -11,10 +11,18 @@ public class Player {
 		setRandomSymbol(number);
 	}
 
+
+	/**
+	 * @return Slot
+	 */
 	public Slot getSlot() {
 		return slot;
 	}
 
+
+	/**
+	 * @return char
+	 */
 	public char getSymbol() {
 		return this.symbol;
 	}
@@ -56,5 +64,14 @@ public class Player {
 
 	public void setSlot(Slot slot) {
 		this.slot = slot;
+	}
+
+	public int checkSlot(){
+		if (this.slot.getLadder() != null) {
+			return 1;
+		}else if(this.slot.getSnake() != null){
+			return 2;
+		}
+		return 0;
 	}
 }

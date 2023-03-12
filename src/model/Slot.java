@@ -22,10 +22,16 @@ public class Slot {
 		return previous;
 	}
 
+	/**
+	 * @param previous
+	 */
 	public void setPrevious(Slot previous) {
 		this.previous = previous;
 	}
 
+	/**
+	 * @return Slot
+	 */
 	public Slot getNext() {
 		return next;
 	}

@@ -6,127 +6,101 @@ import exception.*;
 import java.util.InputMismatchException;
 
 public class Game {
+    private static Game game = new Game();
+    private static Controller controller;
+    private static Scanner reader;
 
-	private static Controller controller = new Controller();
-	private Scanner reader;
-	private GameExceptions gameExcept;
-	private static Game game = new Game();
+    public Game() {
+        controller = new Controller();
+        reader = new Scanner(System.in);
+    }
 
-	public Game() {
-		controller = new Controller();
-		reader = new Scanner(System.in);
-		gameExcept = new GameExceptions();
-	}
+    public static void main(String[] args) {
+        System.out.println("<<<<< Welcome to snakes and ladders >>>>>");
+        game.displayStartMenu();
+    }
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+    public void displayStartMenu() {
+        System.out.print("1) Play\n2) Exit\nSelected: ");
+        int option = validateInteger();
+        executeOption(option);
+    }
 
-		controller.generateGameBoard(10, 10, 0, 0);
-		System.out.println(controller.printGameBoard());
-		game.displayMenu();
-	}
+    public int validateInteger() {
+        int value = 0;
+        try {
+            value = reader.nextInt();
+        } catch (InputMismatchException ime) {
+            reader.nextLine();
+            System.out.print("Invalid input. Type a valid integer number: ");
+            value = validateInteger();
+        }
+        return value;
+    }
 
-	public void displayMenu() {
-		int option = getOptionShowMenu();
-		if (option == 0){
-			executeOption(option);
-			return;
-		}
-		executeOption(option);
-		displayMenu();
-	}
+    public void executeOption(int option) {
+        switch (option) {
+            case 1:
+                generateBoard();
+                play();
+                break;
+            case 2:
+                System.out.println("\nThanks for using the program. Until next time!");
+                break;
+            default:
+                System.out.println("Error. Type a valid option.\n");
+                break;
+        }
+        if (option != 2)
+            displayStartMenu();
+    }
 
-	public int getOptionShowMenu() {
-		int option = 0;
+    public void generateBoard() {
+        System.out.print("\nColumns: ");
+        int columns = validateInteger();
+        System.out.print("Rows: ");
+        int rows = validateInteger();
+        System.out.print("Snakes: ");
+        int snakes = validateInteger();
+        System.out.print("Ladders: ");
+        int ladders = validateInteger();
+        controller.generateGameBoard(rows, columns, snakes, ladders);
+        System.out.println("\nLet the game begin!\n");
+    }
 
-		System.out.println("<<<<< Snakes and Ladders >>>>>");
-		System.out.println(
-				"1. Start Game \n" +
-						"2.  \n" +
-						"3.  \n" +
-						"4.  \n" +
-						"0. Exit. ");
-		option = validateInteger();
-		return option;
-	}
+    public void displaySecondaryMenu() {
+        System.out.print(controller.displaySecondaryMethod());
+    }
 
-	public void executeOption(int option) {
-		switch (option) {
-			case 1:
-				generateBoard();
-				break;
-			case 2:
-				// printGameBoard();
-				break;
-			case 3:
-				movePlayer();
-				break;
-			case 4:
-				break;
-			case 0:
-				System.out.println("Exit program.");
-				break;
-			default:
-				System.out.println("Invalid Option");
-				break;
-		}
-	}
+    public void printGameBoard() {
+        System.out.println(controller.printGameBoard());
+    }
 
-	public void generateBoard() {
-		int rows = 0;
-		int columns = 0;
-		int snakes = 0, ladders = 0;
+    public void showSnakesAndLadders() {
+    }
 
-		System.out.print("Columns: ");
-		columns = validateInteger();
-		
-		System.out.print("Rows: ");
-		rows = validateInteger();
+    public void play() {
+        play(1);
+    }
 
-
-
-		System.out.print("Snakes: ");
-		snakes = validateInteger();;
-
-		System.out.print("Ladders: ");
-		ladders = validateInteger();
-
-		controller.generateGameBoard(rows, columns, snakes, ladders);
-
-	}
-
-	public void play() {
-	}
-
-	public void printGameBoard() {
-		System.out.println(controller.printGameBoard());
-	}
-
-	public void showSnakesAndLadders() {
-	}
-
-	public void movePlayer(){
-		System.out.println(controller.rollDice());
-		System.out.println(controller.printGameBoard());
-	}
-
-	public int validateInteger() {
-		int value = 0;
-
-			try {
-				value = reader.nextInt();
-				reader.nextLine();
-			} catch (InputMismatchException ie) {
-
-				System.out.println("Input must be a int");
-				reader.next();
-				value = validateInteger();
-
-			}
-		return value;
-	}
-
+    public void play(int option) {
+        if (option == 1)
+            printGameBoard();
+        displaySecondaryMenu();
+        option = validateInteger();
+        switch (option) {
+            case 1:
+                System.out.println(controller.rollDice());
+                break;
+            case 2:
+                System.out.println(controller.printSnakesAndLadders());
+                break;
+            default:
+                System.out.println("Error. Type a valid option.\n");
+                break;
+        }
+        if (!controller.matchFinished())
+            play(option);
+    }
 
 }
