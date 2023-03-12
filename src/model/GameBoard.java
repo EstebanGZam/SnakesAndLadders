@@ -108,9 +108,13 @@ public class GameBoard {
 		Slot snakeTail = search(snakeTailValue);
 		if (snakeTail.getSnake() == null && snakeTail.getLadder() == null) {
 			snakeTail.setSnake(value + "A");
+			System.out.println("GameBoard::snakeBoard::if");
 			return snakeTailValue;
-		} else
+		} else{
 			return snakeTailValue(value, end);
+		}
+
+
 	}
 
 	private int snakeHeadValue(int value, int from, int end) {

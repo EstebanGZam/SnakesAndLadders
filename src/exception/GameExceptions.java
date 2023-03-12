@@ -3,37 +3,9 @@ package exception;
 import java.util.*;
 
 public class GameExceptions extends Exception{
-    public int maxSlots;
+
     private static Scanner reader = new Scanner(System.in);
 
-/**
-    * <b>Name:</b> setMaxSlots <br>
-    * <b>Description:</b> This method sets the maximum number of 
-    * slots for a given object, updating its value with the input provided by the user. <br>
-    * <b><i>pre:</i></b> None. <br>
-    * <b><i>pos:</i></b> The method updates the maximum number of slots 
-    * for the object and returns the new value. <br>
-    *
-    * @param maxSlots the new maximum number of slots to set for the object
-    * @return the new maximum number of slots for the object
-    */
-    public int setMaxSlots(int maxSlots){
-        return this.maxSlots = maxSlots;
-    }
-
-/**
-	 * <b>Name:</b> getMaxSlots <br>
-	 * <b>Description:</b> This method gets the current 
-     * maximum number of slots for a given object. <br>
-	 * <b><i>pre:</i></b> None <br>
-	 * <b><i>pos:</i></b>  The method returns the current 
-     * maximum number of slots for the object. <br>
-	 * 
-	 * @return The current maximum number of slots for the object
-	 */
-    public int getMaxSlots() {
-        return maxSlots;
-    }
 
 /**
     * <b>Name:</b> IntegerMisMatchException <br>
@@ -88,23 +60,14 @@ public class GameExceptions extends Exception{
                 System.out.println("Input must be greater than zero");
                 input = reader.nextInt();
                 input = ZeroInputException(input);
-            
-        }
+            }
+    }else{
+        input = IntegerMisMatchException(input);
     }
     
         return input;
     }
-//No escribi el contrato porque el metodo aun no funciona, Esteban ayuda pls :3  
-    public Object InputExceedsMax(Object input) throws IllegalArgumentException {
-        if (input instanceof Integer) {
-            int value = (Integer) input;
-            if (value >= maxSlots || value >= (maxSlots/2)) {
-                throw new IllegalArgumentException("Input cannot be greater than or equal to maxSlots or half the board.");
-            }
-        }
-        return input;
-    }
-   
+
 /**
     *<b>Name:</b> validateInput <br>
     *<b>Description:</b> This method validates the user 
@@ -132,27 +95,6 @@ public class GameExceptions extends Exception{
                 input = ZeroInputException(input);
 
             }catch (Exception e){
-                System.out.println("Error: " + e);
-            }
-        }
-        if (instance == 0){
-            try {
-                input = IntegerMisMatchException(input);
-
-                input = ZeroInputException(input);
-
-                try {
-
-                    input = InputExceedsMax(input); 
-
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Error: " + e.getMessage());
-                    reader.nextLine();
-                     validateInput(input, instance);
-                }
-                
-            }catch (Exception e){
-
                 System.out.println("Error: " + e);
             }
         }

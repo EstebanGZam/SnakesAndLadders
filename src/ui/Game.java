@@ -9,19 +9,13 @@ public class Game {
 
 	private static Controller controller = new Controller();
 	private Scanner reader;
-<<<<<<< HEAD
 	private GameExceptions gameExcept;
-=======
->>>>>>> c4fb858f4f6dec93d2514a94f1c06a78a69b3353
 	private static Game game = new Game();
 
 	public Game() {
 		controller = new Controller();
 		reader = new Scanner(System.in);
-<<<<<<< HEAD
 		gameExcept = new GameExceptions();
-=======
->>>>>>> c4fb858f4f6dec93d2514a94f1c06a78a69b3353
 	}
 
 	/**
@@ -46,6 +40,7 @@ public class Game {
 
 	public int getOptionShowMenu() {
 		int option = 0;
+
 		System.out.println("<<<<< Snakes and Ladders >>>>>");
 		System.out.println(
 				"1. Start Game \n" +
@@ -80,38 +75,26 @@ public class Game {
 	}
 
 	public void generateBoard() {
-<<<<<<< HEAD
 		int rows = 0;
 		int columns = 0;
-		int snakes = 0;
-		int ladders = 0;
+		int snakes = 0, ladders = 0;
 
 		System.out.print("Columns: ");
-		columns = (int) gameExcept.validateInput( columns, 1);
+		columns = validateInteger();
 		
 		System.out.print("Rows: ");
-		rows = (int) gameExcept.validateInput( rows, 1);
-		
-		int numberOfSlots = rows * columns;
+		rows = validateInteger();
 
-			gameExcept.setMaxSlots(numberOfSlots);
-			
-		System.out.print("Snakes: ");
-		snakes = (int) gameExcept.validateInput( snakes, 0);
-		System.out.print("Ladders: ");
-		ladders = (int) gameExcept.validateInput( snakes, 0);
 
-=======
-		System.out.print("Columns: ");
-		int columns = validateInteger();
-		System.out.print("Rows: ");
-		int rows = validateInteger();
+
 		System.out.print("Snakes: ");
-		int snakes = validateInteger();
+		snakes = validateInteger();;
+
 		System.out.print("Ladders: ");
-		int ladders = validateInteger();
->>>>>>> c4fb858f4f6dec93d2514a94f1c06a78a69b3353
+		ladders = validateInteger();
+
 		controller.generateGameBoard(rows, columns, snakes, ladders);
+
 	}
 
 	public void play() {
@@ -131,19 +114,19 @@ public class Game {
 
 	public int validateInteger() {
 		int value = 0;
-		while (true) {
+
 			try {
 				value = reader.nextInt();
 				reader.nextLine();
-				break;
 			} catch (InputMismatchException ie) {
-				System.out.println("Invalid input!. Try again fool");
-				reader.next();
-				continue;
-			}
-		}
 
+				System.out.println("Input must be a int");
+				reader.next();
+				value = validateInteger();
+
+			}
 		return value;
 	}
+
 
 }
