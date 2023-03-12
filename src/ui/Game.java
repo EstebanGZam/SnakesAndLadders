@@ -15,30 +15,38 @@ public class Game {
         reader = new Scanner(System.in);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ZeroInputException {
         System.out.println("<<<<< Welcome to snakes and ladders >>>>>");
         game.displayStartMenu();
     }
 
-    public void displayStartMenu() {
+    public void displayStartMenu(){
         System.out.print("1) Play\n2) Exit\nSelected: ");
         int option = validateInteger();
         executeOption(option);
     }
 
-    public int validateInteger() {
+    public int validateInteger(){
         int value = 0;
         try {
             value = reader.nextInt();
+            if (value <= 0) {
+                throw new ZeroInputException("The input value must be greater than zero.");
+            }
         } catch (InputMismatchException ime) {
             reader.nextLine();
             System.out.print("Invalid input. Type a valid integer number: ");
+            value = validateInteger();
+        } catch (ZeroInputException zie) {
+            System.out.println(zie.getMessage());
+            System.out.print("Type a valid integer number: ");
             value = validateInteger();
         }
         return value;
     }
 
-    public void executeOption(int option) {
+
+    public void executeOption(int option){
         switch (option) {
             case 1:
                 generateBoard();
@@ -55,17 +63,48 @@ public class Game {
             displayStartMenu();
     }
 
-    public void generateBoard() {
+    public void generateBoard(){
         System.out.print("\nColumns: ");
         int columns = validateInteger();
+
         System.out.print("Rows: ");
         int rows = validateInteger();
-        System.out.print("Snakes: ");
-        int snakes = validateInteger();
-        System.out.print("Ladders: ");
-        int ladders = validateInteger();
-        controller.generateGameBoard(rows, columns, snakes, ladders);
+
+        validateBoard(rows, columns);
+
+        try {
+            System.out.print("Generating the board ");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("\nLet the game begin!\n");
+    }
+
+    public void validateBoard(int rows, int columns){
+        int max = rows * columns;
+        int snakes = 0, ladders = 0;
+        try{
+            System.out.print("Snakes: ");
+                snakes = validateInteger();
+            System.out.print("Ladders: ");
+                ladders = validateInteger();
+                if ((snakes + ladders) >= max/2){
+                 throw new InputOutOfBoardException("Ladders and snakes cannot be equal to or greater than half the board");
+                }
+
+        }catch (InputOutOfBoardException iobe){
+            System.out.println(iobe.getMessage());
+            System.out.print("Type valid values for snakes and ladders: (Less Than " + max /2 + ")");
+            
+            validateBoard(rows, columns);
+        } catch (StackOverflowError ste){
+            System.out.println(ste.getMessage());
+            System.out.print("Type valid values for snakes and ladders: (Less Than " + max /2 + ")");
+
+            validateBoard(rows, columns);
+        }
+        controller.generateGameBoard(rows, columns, snakes, ladders);
     }
 
     public void displaySecondaryMenu() {
@@ -79,7 +118,7 @@ public class Game {
     public void showSnakesAndLadders() {
     }
 
-    public void play() {
+    public void play(){
         play(1);
     }
 
