@@ -65,4 +65,13 @@ public class Player {
 	public void setSlot(Slot slot) {
 		this.slot = slot;
 	}
+
+	public int checkSlot(){
+		if (this.slot.getLadder() != null) {
+			return 1;
+		}else if(this.slot.getSnake() != null){
+			return 2;
+		}
+		return 0;
+	}
 }
