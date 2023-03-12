@@ -92,7 +92,7 @@ public class Game {
 				System.out.println(controller.rollDice());
 				break;
 			case 2:
-				System.out.println("\n" + controller.printSnakesAndLadders());
+				System.out.println(controller.printSnakesAndLadders());
 				break;
 			default:
 				System.out.println("Error. Type a valid option.\n");

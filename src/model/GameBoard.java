@@ -184,7 +184,7 @@ public class GameBoard {
 	 * @return Number of the square in which the snake was located.
 	 */
 	private int snakeTailValue(int value, int end) {
-		int snakeTailValue = 1 + random.nextInt(end - 1);
+		int snakeTailValue = 1 + random.nextInt(end - 2);
 		Slot snakeTail = search(snakeTailValue);
 		if (checkNextSlotsAvailability(snakeTail, true)) {
 			if (snakeTail.getSnake() == null && snakeTail.getLadder() == null) {
@@ -212,7 +212,7 @@ public class GameBoard {
 			snakeHead.setSnake(value + "B");
 			return snakeHeadValue;
 		} else
-			return snakeTailValue(value, end);
+			return snakeHeadValue(value, from, end);
 	}
 
 	/**
@@ -404,23 +404,25 @@ public class GameBoard {
 	}
 
 	/**
-	 *  <b>Name:</b> rollDice <br>
-	 * 	<b>Description:</b> Select random number, call movePlayer method to current player and
-	 * 	refresh the current player. <br>
+	 * <b>Name:</b> rollDice <br>
+	 * <b>Description:</b> Select random number, call movePlayer method to current
+	 * player and
+	 * refresh the current player. <br>
 	 * 
 	 * @return int dice: Represent a message with dice number, current player and
-	 *  if player uses a snake or ladder.
+	 *         if player uses a snake or ladder.
 	 */
 
 	public String rollDice() {
 		int dice = 1 + random.nextInt(6);
 		Player player = getCurrentPlayer();
 		movePlayer(player, dice);
-		String msg = "\nPlayer " + player.getSymbol() + " rolled: " + dice + "\n" + checkPlayerSlot(player);
+		String msg = "\nPlayer " + player.getSymbol() + " rolled: " + dice + checkPlayerSlot(player);
 		if (!winner) {
 			this.currentPlayer = nextPlayer();
 		} else {
-			msg += "Match finishes. The player " + player.getSymbol() + " is the winner.";
+			msg += "\n" + printSlots();
+			msg += "\nMatch finishes. The player " + player.getSymbol() + " is the winner.";
 			this.matchScore = calculateScore();
 			msg += "\nPlayer score: " + matchScore;
 		}
@@ -456,8 +458,9 @@ public class GameBoard {
 
 	/**
 	 * <b>Name:</b> movePLayer <br>
-	 * <b>Description:</b> Change the aim of the current player slot by slot to the new
-	 *  position. <br>
+	 * <b>Description:</b> Change the aim of the current player slot by slot to the
+	 * new
+	 * position. <br>
 	 *
 	 * 
 	 * @param player
@@ -493,28 +496,31 @@ public class GameBoard {
 
 	/**
 	 * <b>Name:</b> checkPlayerSlot <br>
-	 * <b>Description:</b> Verify if slot of current player is a snake or ladder, also
-	 *  if is true, check that player can do it from that snake head or ladder floor. <br>
+	 * <b>Description:</b> Verify if slot of current player is a snake or ladder,
+	 * also
+	 * if is true, check that player can do it from that snake head or ladder floor.
+	 * <br>
 	 *
 	 *
 	 * @param player
 	 * @return status
 	 */
 
-	public String checkPlayerSlot(Player player){
-		String status = "";
+	public String checkPlayerSlot(Player player) {
+		String status = "\n";
 		String id = "";
 		if (player.checkSlot() == 1) {
 			id = player.getSlot().getLadder();
-			if (id.charAt(id.length()-1)=='1') {
-				useLadder(searchLadderCeil(player.getSlot().getNext(), id.charAt(0)), player);
-				status = "How lucky! You went up the stairs!";
+			if (id.charAt(id.length() - 1) == '1') {
+				useLadder(searchLadderCeil(player.getSlot().getNext(), id.charAt(0)), player); // Esto falla si hay más
+																								// de 10 escaleras
+				status += "How lucky! You went up the stairs!\n";
 			}
-		}else if (player.checkSlot() == 2) {
+		} else if (player.checkSlot() == 2) {
 			id = player.getSlot().getSnake();
-			if (id.charAt(id.length()-1)=='B') {
-				useSnake(searchSnakeTail(player.getSlot().getPrevious(), id.charAt(0)), player);
-				status = "Bad luck. You got eaten by snake!";
+			if (id.charAt(id.length() - 1) == 'B') {
+				useSnake(searchSnakeTail(player.getSlot().getPrevious(), id.substring(0, id.length() - 1)), player);
+				status += "Bad luck. You got eaten by snake!\n";
 			}
 		}
 		return status;
@@ -548,7 +554,6 @@ public class GameBoard {
 		if (player.getSlot() == this.tail) {
 			winner = true;
 		}
-		return;
 	}
 
 	/**
@@ -561,7 +566,7 @@ public class GameBoard {
 	 * @return ladderCeil
 	 */
 
-	private Slot searchLadderCeil(Slot current, char id){
+	private Slot searchLadderCeil(Slot current, char id) {
 		if (current.getLadder() != null) {
 			if (id == current.getLadder().charAt(0)) {
 				return current;
@@ -574,15 +579,15 @@ public class GameBoard {
 	 * <b>Name:</b> searchSnakeTail <br>
 	 * <b>Description:</b> Search the snake tail, and return it. <br>
 	 *
-	 *
 	 * @param current
 	 * @param id
 	 * @return snakeTail
 	 */
 
-	private Slot searchSnakeTail(Slot current, char id){
-		if (current.getSnake() != null) {
-			if (id == current.getSnake().charAt(0)) {
+	private Slot searchSnakeTail(Slot current, String id) {
+		String snake = current.getSnake();
+		if (snake != null) {
+			if (id.equals(snake.substring(0, snake.length() - 1))) {
 				return current;
 			}
 		}
