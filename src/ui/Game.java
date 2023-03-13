@@ -2,6 +2,8 @@ package ui;
 
 import java.util.Scanner;
 import model.Controller;
+import model.Score;
+
 import java.util.InputMismatchException;
 
 public class Game {
@@ -90,6 +92,9 @@ public class Game {
 		switch (option) {
 			case 1:
 				System.out.println(controller.rollDice());
+				if (controller.matchFinished()) {
+					winnerRegister();
+				}
 				break;
 			case 2:
 				System.out.println(controller.printSnakesAndLadders());
@@ -102,4 +107,9 @@ public class Game {
 			play(option);
 	}
 
+	public void winnerRegister(){
+		System.out.println("\n Type winner nick name: ");
+		String winnerNick = reader.next();
+		System.out.println(controller.addScoreRegistry(winnerNick));
+	}
 }
