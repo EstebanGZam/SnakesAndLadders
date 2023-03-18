@@ -1,74 +1,66 @@
 package model;
 
 public class Controller {
-	private ScoreBoard scoreBoard;
-	public Controller(){
-		scoreBoard = new ScoreBoard();
-	}
+    private ScoreBoard scoreBoard;
 
-	private GameBoard gameBoard;
+    public Controller() {
+        scoreBoard = new ScoreBoard();
+    }
 
-	/**
-	 * 
-	 * @param rows
-	 * @param columns
-	 * @param snakes
-	 * @param ladders
-	 */
-	public void generateGameBoard(int rows, int columns, int snakes, int ladders) {
-		gameBoard = new GameBoard(rows, columns, snakes, ladders);
-	}
+    private GameBoard gameBoard;
 
-	/**
-	 * @return String
-	 */
-	public String printGameBoard() {
-		return gameBoard.printSlots();
-	}
+    /**
+     * @param rows
+     * @param columns
+     * @param snakes
+     * @param ladders
+     */
+    public void generateGameBoard(int rows, int columns, int snakes, int ladders) {
+        gameBoard = new GameBoard(rows, columns, snakes, ladders);
+    }
 
-	/**
-	 * @return String
-	 */
-	public String printSnakesAndLadders() {
-		return gameBoard.printSnakesAndLadders();
-	}
+    /**
+     * @return String
+     */
+    public String printGameBoard() {
+        return gameBoard.printSlots();
+    }
 
-	/**
-	 * rollDice: Extracts the result of the launch and organizes it in a message.
-	 * 
-	 * @return String msj: Message that inform to current player result of roll
-	 *         dice.
-	 */
-	public String rollDice() {
-		String msg = gameBoard.rollDice();
-		if (matchFinished()) {
-			msg += printScoreBoard();
-		}
-		return msg;
-	}
+    /**
+     * @return String
+     */
+    public String printSnakesAndLadders() {
+        return gameBoard.printSnakesAndLadders();
+    }
 
-	public String displaySecondaryMethod() {
-		return "Player " + gameBoard.getCurrentPlayer().getSymbol()
-				+ ", is your turn.\n1) Roll dice.\n2) See ladders and snakes\nOption: ";
-	}
+    /**
+     * rollDice: Extracts the result of the launch and organizes it in a message.
+     *
+     * @return String msj: Message that inform to current player result of roll
+     * dice.
+     */
+    public String rollDice() {
+        return gameBoard.rollDice();
+    }
 
-	public boolean matchFinished() {
-		if (gameBoard.getMatchScore() != 0)
-			return true;
-		return false;
-	}
+    public String displaySecondaryMethod() {
+        return "Player " + gameBoard.getCurrentPlayer().getSymbol()
+                + ", is your turn.\n1) Roll dice.\n2) See ladders and snakes\nOption: ";
+    }
 
-	public String addScoreRegistry(String winnerNick) {
-		return addScoreRegistry(winnerNick, gameBoard.getMatchScore());
-	}
+    public boolean matchFinished() {
+        if (gameBoard.getMatchScore() != 0)
+            return true;
+        return false;
+    }
 
-	private String addScoreRegistry(String winnerNick, long matchScore){
-		scoreBoard.addScore(new Score(winnerNick, matchScore));
-		return scoreBoard.inOrderString();
-	}
+    public String addScoreRegistry(String winnerNick) {
+        return addScoreRegistry(winnerNick, gameBoard.getMatchScore());
+    }
 
-	private String printScoreBoard() {
-		return null;
-	}
+    private String addScoreRegistry(String winnerNick, long matchScore) {
+        scoreBoard.addScore(new Score(winnerNick, matchScore));
+        return scoreBoard.inOrderString();
+    }
 
 }

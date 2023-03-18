@@ -1,6 +1,6 @@
 package model;
 
-public class Score implements Comparable<Score>{
+public class Score{
 
 	private String name;
 	private double score;
@@ -55,8 +55,5 @@ public class Score implements Comparable<Score>{
 		return this.name +"  "+ this.score;
 	}
 
-	@Override
-	public int compareTo(Score o) {
-		return 0;
-	}
+
 }
