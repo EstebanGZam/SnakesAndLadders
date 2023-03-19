@@ -2,12 +2,11 @@ package model;
 
 public class Controller {
     private ScoreBoard scoreBoard;
+    private GameBoard gameBoard;
 
     public Controller() {
         scoreBoard = new ScoreBoard();
     }
-
-    private GameBoard gameBoard;
 
     /**
      * @param rows
