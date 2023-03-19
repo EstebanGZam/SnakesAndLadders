@@ -107,9 +107,6 @@ public class Game {
         System.out.println(controller.printGameBoard());
     }
 
-    public void showSnakesAndLadders() {
-    }
-
     public void play(){
         play(1);
     }

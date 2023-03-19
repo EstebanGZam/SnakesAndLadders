@@ -207,17 +207,12 @@ public class GameBoard {
 	 */
 	private int snakeHeadValue(int value, int from, int end) {
 		int snakeHeadValue = from + random.nextInt(end - from);
-		try {
-			Slot snakeHead = search(snakeHeadValue);
-			if (snakeHead.getSnake() == null && snakeHead.getLadder() == null) {
-				snakeHead.setSnake(value + "B");
-				return snakeHeadValue;
-			} else {
-				return snakeHeadValue(value, from, end);
-			}
-		} catch (StackOverflowError e) {
-			return -1;
-		}
+		Slot snakeHead = search(snakeHeadValue);
+		if (snakeHead.getSnake() == null && snakeHead.getLadder() == null) {
+			snakeHead.setSnake(value + "B");
+			return snakeHeadValue;
+		} else
+			return snakeHeadValue(value, from, end);
 	}
 
 	/**
@@ -246,15 +241,11 @@ public class GameBoard {
 	 * @param ladders   Amount of ladders to be added.
 	 */
 	private void addLadders(char character, int ladders) {
-			try {
-				if (ladders > 0) {
-					int ladderFloorValue = ladderFloorValue(character, this.tail.getSlotNumber());
-					ladderCeilValue(character, ladderFloorValue, this.tail.getSlotNumber());
-					addLadders(++character, --ladders);
-				}
-			}catch (NullPointerException e){
-				return;
-			}
+		if (ladders > 0) {
+			int ladderFloorValue = ladderFloorValue(character, this.tail.getSlotNumber());
+			ladderCeilValue(character, ladderFloorValue, this.tail.getSlotNumber());
+			addLadders(++character, --ladders);
+		}
 	}
 
 	/**
@@ -268,18 +259,14 @@ public class GameBoard {
 	 */
 	private int ladderFloorValue(char character, int end) {
 		int ladderFloorValue = 2 + random.nextInt(end - 3);
-		try {
-			Slot ladderFloor = search(ladderFloorValue);
-			if (checkNextSlotsAvailability(ladderFloor.getNext(), false)) {
-				if (ladderFloor.getLadder() == null && ladderFloor.getSnake() == null) {
-					ladderFloor.setLadder(character + "1");
-					return ladderFloorValue;
-				}
+		Slot ladderFloor = search(ladderFloorValue);
+		if (checkNextSlotsAvailability(ladderFloor.getNext(), false)) {
+			if (ladderFloor.getLadder() == null && ladderFloor.getSnake() == null) {
+				ladderFloor.setLadder(character + "1");
+				return ladderFloorValue;
 			}
-			return ladderFloorValue(character, end);
-		} catch (StackOverflowError e) {
-			return -1;
 		}
+		return ladderFloorValue(character, end);
 	}
 
 	/**
@@ -296,15 +283,11 @@ public class GameBoard {
 	private int ladderCeilValue(char character, int from, int end) {
 		int ladderCeilValue = from + random.nextInt(end - from) + 1;
 		Slot ladderCeil = search(ladderCeilValue);
-		try{
 		if (ladderCeil.getLadder() == null && ladderCeil.getSnake() == null) {
 			ladderCeil.setLadder(character + "2");
 			return ladderCeilValue;
 		} else
-			return ladderCeilValue(character, from, end);}
-		catch (NullPointerException e){
-			return -1;
-		}
+			return ladderCeilValue(character, from, end);
 	}
 
 	private boolean checkNextSlotsAvailability(Slot current, boolean snakes) {
@@ -447,12 +430,16 @@ public class GameBoard {
 	}
 
 	public Player getCurrentPlayer() {
-		return switch (currentPlayer) {
-			case 1 -> player1;
-			case 2 -> player2;
-			case 3 -> player3;
-			default -> null;
-		};
+		switch (currentPlayer) {
+			case 1:
+				return player1;
+			case 2:
+				return player2;
+			case 3:
+				return player3;
+			default:
+				return null;
+		}
 	}
 
 	private int nextPlayer() {
@@ -521,12 +508,11 @@ public class GameBoard {
 
 	public String checkPlayerSlot(Player player) {
 		String status = "\n";
-		String id = "";
+		String id;
 		if (player.checkSlot() == 1) {
 			id = player.getSlot().getLadder();
 			if (id.charAt(id.length() - 1) == '1') {
-				useLadder(searchLadderCeil(player.getSlot().getNext(), id.charAt(0)), player); // Esto falla si hay más
-				// de 10 escaleras
+				useLadder(searchLadderCeil(player.getSlot().getNext(), id.charAt(0)), player);
 				status += "How lucky! You went up the stairs!\n";
 			}
 		} else if (player.checkSlot() == 2) {
@@ -550,7 +536,6 @@ public class GameBoard {
 
 	public void useSnake(Slot snakeTail, Player player) {
 		player.setSlot(snakeTail);
-		return;
 	}
 
 	/**
