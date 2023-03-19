@@ -37,7 +37,7 @@ public class Controller {
      * rollDice: Extracts the result of the launch and organizes it in a message.
      *
      * @return String msj: Message that inform to current player result of roll
-     * dice.
+     *         dice.
      */
     public String rollDice() {
         return gameBoard.rollDice();

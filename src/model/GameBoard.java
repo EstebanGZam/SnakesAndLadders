@@ -512,8 +512,7 @@ public class GameBoard {
 		if (player.checkSlot() == 1) {
 			id = player.getSlot().getLadder();
 			if (id.charAt(id.length() - 1) == '1') {
-				useLadder(searchLadderCeil(player.getSlot().getNext(), id.charAt(0)), player); // Esto falla si hay más
-																								// de 10 escaleras
+				useLadder(searchLadderCeil(player.getSlot().getNext(), id.charAt(0)), player);
 				status += "How lucky! You went up the stairs!\n";
 			}
 		} else if (player.checkSlot() == 2) {
@@ -537,7 +536,6 @@ public class GameBoard {
 
 	public void useSnake(Slot snakeTail, Player player) {
 		player.setSlot(snakeTail);
-		return;
 	}
 
 	/**

@@ -5,12 +5,10 @@ public class Player {
 	private Slot slot;
 	private char symbol;
 
-	// El numero debe estar entre 1 y 9
 	public Player(Slot slot, int number) {
 		this.slot = slot;
 		setRandomSymbol(number);
 	}
-
 	
 	/** 
 	 * @return Slot
@@ -18,7 +16,6 @@ public class Player {
 	public Slot getSlot() {
 		return slot;
 	}
-
 	
 	/** 
 	 * @return char
