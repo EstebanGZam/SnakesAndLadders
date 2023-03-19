@@ -508,7 +508,7 @@ public class GameBoard {
 
 	public String checkPlayerSlot(Player player) {
 		String status = "\n";
-		String id = "";
+		String id;
 		if (player.checkSlot() == 1) {
 			id = player.getSlot().getLadder();
 			if (id.charAt(id.length() - 1) == '1') {

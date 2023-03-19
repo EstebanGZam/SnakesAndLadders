@@ -1,38 +1,34 @@
 package model;
 
-public class Score{
+public class Score {
 
-	private String name;
+	private String names;
 	private double score;
 	private Score right;
 	private Score left;
 
 	/**
 	 * 
-	 * @param name
+	 * @param names
 	 * @param score
 	 */
-	public Score(String name, double score) {
-		this.name = name;
+	public Score(String names, double score) {
+		this.names = names;
 		this.score = score;
 		this.right = null;
 		this.left = null;
 	}
 
-	public String getName() {
-		return name;
+	public String getNames() {
+		return names;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNames(String names) {
+		this.names = names;
 	}
 
 	public double getScore() {
 		return score;
-	}
-
-	public void setScore(double score) {
-		this.score = score;
 	}
 
 	public Score getRight() {
@@ -51,9 +47,18 @@ public class Score{
 		this.left = left;
 	}
 
-	public String toString(){
-		return this.name +"  "+ this.score;
+	@Override
+	public String toString() {
+		if (this.names.split("\n").length > 1) {
+			return toString(this.names.split("\n"), 0);
+		}
+		return this.score + " " + this.names + "\n";
 	}
 
+	public String toString(String[] records, int index) {
+		if (index == records.length)
+			return "";
+		return this.score + " " + records[index] + "\n" + toString(records, ++index);
+	}
 
 }

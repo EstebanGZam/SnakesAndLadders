@@ -20,41 +20,22 @@ public class ScoreBoard {
 		if (newScore.getScore() < current.getScore()) {
 			if (current.getLeft() == null) {
 				current.setLeft(newScore);
-				return;
 			} else {
 				addScore(newScore, current.getLeft());
 			}
 		} else if (newScore.getScore() > current.getScore()) {
 			if (current.getRight() == null) {
 				current.setRight(newScore);
-				return;
 			} else {
 				addScore(newScore, current.getRight());
 			}
 		} else {
-			if (newScore.getName().equals(current.getName())) {
-				// Si el nick y el puntaje son iguales, no se agrega
-				return;
-			} else if (newScore.getName().compareTo(current.getName()) < 0) {
-				if (current.getLeft() == null) {
-					current.setLeft(newScore);
-					return;
-				} else {
-					addScore(newScore, current.getLeft());
-				}
-			} else {
-				if (current.getRight() == null) {
-					current.setRight(newScore);
-					return;
-				} else {
-					addScore(newScore, current.getRight());
-				}
-			}
+			current.setNames(current.getNames() + "\n" + newScore.getNames());
 		}
 	}
 
 	public String inOrderString() {
-		return "<<<<<<<<  SCORES  >>>>>>>>\n" + "========================\n\n" + inOrderString(root)
+		return "\n<<<<<<<<  SCORES  >>>>>>>>\n" + "========================\n\n" + inOrderString(root)
 				+ "\n========================\n";
 	}
 
@@ -62,7 +43,7 @@ public class ScoreBoard {
 		if (current == null) {
 			return "";
 		}
-		return inOrderString(current.getRight()) + current.toString() + "\n" + inOrderString(current.getLeft());
+		return inOrderString(current.getRight()) + current.toString() + inOrderString(current.getLeft());
 	}
 
 }

@@ -28,7 +28,7 @@ public class Game {
 	}
 
 	public int validateInteger() {
-		int value = 0;
+		int value;
 		try {
 			value = reader.nextInt();
 			reader.nextLine();
@@ -78,9 +78,6 @@ public class Game {
 		System.out.println(controller.printGameBoard());
 	}
 
-	public void showSnakesAndLadders() {
-	}
-
 	public void play() {
 		play(1);
 	}
@@ -98,7 +95,7 @@ public class Game {
 				}
 				break;
 			case 2:
-				System.out.println(controller.printSnakesAndLadders());
+				System.out.println("\n" + controller.printSnakesAndLadders());
 				break;
 			default:
 				System.out.println("Error. Type a valid option.\n");
