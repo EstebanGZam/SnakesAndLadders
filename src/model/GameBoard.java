@@ -141,7 +141,6 @@ public class GameBoard {
 		} else if (current != null && current.equals(this.tail)) {
 			return null;
 		}
-		assert current != null;
 		return search(current.getNext(), slotNumber);
 	}
 
@@ -206,15 +205,6 @@ public class GameBoard {
 	 * @param end   Final value of the last slot in the game board.
 	 * @return Number of the square in which the snake was located.
 	 */
-	/*private int snakeHeadValue(int value, int from, int end) {
-		int snakeHeadValue = from + random.nextInt(end - from);
-		Slot snakeHead = search(snakeHeadValue);
-		if (snakeHead.getSnake() == null && snakeHead.getLadder() == null) {
-			snakeHead.setSnake(value + "B");
-			return snakeHeadValue;
-		} else
-			return snakeHeadValue(value, from, end);
-	}*/
 	private int snakeHeadValue(int value, int from, int end) {
 		int snakeHeadValue = from + random.nextInt(end - from);
 		try {
@@ -276,17 +266,6 @@ public class GameBoard {
 	 * @param end       Value of the last slot in the game board.
 	 * @return Number of the slot in which the ladder floor is located
 	 */
-	/*private int ladderFloorValue(char character, int end) {
-		int ladderFloorValue = 2 + random.nextInt(end - 3);
-		Slot ladderFloor = search(ladderFloorValue);
-		if (checkNextSlotsAvailability(ladderFloor.getNext(), false)) {
-			if (ladderFloor.getLadder() == null && ladderFloor.getSnake() == null) {
-				ladderFloor.setLadder(character + "1");
-				return ladderFloorValue;
-			}
-		}
-		return ladderFloorValue(character, end);
-	}*/
 	private int ladderFloorValue(char character, int end) {
 		int ladderFloorValue = 2 + random.nextInt(end - 3);
 		try {

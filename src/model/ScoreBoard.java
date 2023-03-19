@@ -14,11 +14,9 @@ public class ScoreBoard {
 		} else {
 			addScore(newScore, this.root);
 		}
-		return;
 	}
 
 	private void addScore(Score newScore, Score current){
-
 		if(newScore.getScore() < current.getScore()){
 			if(current.getLeft() == null){
 				current.setLeft(newScore);

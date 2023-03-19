@@ -40,11 +40,7 @@ public class Controller {
 	 *         dice.
 	 */
 	public String rollDice() {
-		String msg = gameBoard.rollDice();
-		if (matchFinished()) {
-			msg += printScoreBoard();
-		}
-		return msg;
+		return gameBoard.rollDice();
 	}
 
 	public String displaySecondaryMethod() {
@@ -53,21 +49,18 @@ public class Controller {
 	}
 
 	public boolean matchFinished() {
-		return gameBoard.getMatchScore() != 0;
+		if (gameBoard.getMatchScore() != 0)
+			return true;
+		return false;
 	}
 
 	public String addScoreRegistry(String winnerNick) {
 		return addScoreRegistry(winnerNick, gameBoard.getMatchScore());
 	}
 
-	private String addScoreRegistry(String winnerNick, long matchScore){
-
+	private String addScoreRegistry(String winnerNick, long matchScore) {
 		scoreBoard.addScore(new Score(winnerNick, matchScore));
 		return scoreBoard.inOrderString();
-	}
-
-	private String printScoreBoard() {
-		return null;
 	}
 
 }
