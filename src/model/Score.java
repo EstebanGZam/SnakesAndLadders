@@ -19,6 +19,20 @@ public class Score {
 		this.left = null;
 	}
 
+	@Override
+	public String toString() {
+		if (this.names.split("\n").length > 1) {
+			return toString(0);
+		}
+		return this.score + "      " + this.names + "\n";
+	}
+
+	public String toString(int index) {
+		if (index == this.names.split("\n").length)
+			return "";
+		return this.score + "      " + this.names.split("\n")[index] + "\n" + toString(++index);
+	}
+
 	public String getNames() {
 		return names;
 	}
@@ -45,20 +59,6 @@ public class Score {
 
 	public void setLeft(Score left) {
 		this.left = left;
-	}
-
-	@Override
-	public String toString() {
-		if (this.names.split("\n").length > 1) {
-			return toString(this.names.split("\n"), 0);
-		}
-		return this.score + "      " + this.names + "\n";
-	}
-
-	public String toString(String[] records, int index) {
-		if (index == records.length)
-			return "";
-		return this.score + "      " + records[index] + "\n" + toString(records, ++index);
 	}
 
 }

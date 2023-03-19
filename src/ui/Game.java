@@ -89,20 +89,20 @@ public class Game {
         int snakes = validateInteger();
         System.out.print("Ladders: ");
         int ladders = validateInteger();
-        validateBoard(rows, columns, snakes, ladders);
+        generateBoard(rows, columns, snakes, ladders);
     }
 
-    public void validateBoard(int rows, int columns, int snakes, int ladders) {
+    public void generateBoard(int rows, int columns, int snakes, int ladders) {
         try {
-            if ((snakes + ladders) >= rows * columns)
+            if ((snakes + ladders) * 2 > rows * columns)
                 throw new InputOutOfBoardException(
-                        "Ladders and snakes cannot be equal to or greater than half the board");
+                        "The sum of ladders and snakes cannot be greater than the size of the board.");
             controller.generateGameBoard(rows, columns, snakes, ladders);
         } catch (InputOutOfBoardException ioe) {
             System.out.println(ioe.getMessage());
             validateBoard(rows, columns);
         } catch (StackOverflowError e) {
-            validateBoard(rows, columns, snakes, ladders);
+            generateBoard(rows, columns, snakes, ladders);
         }
 
     }

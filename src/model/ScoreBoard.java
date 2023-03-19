@@ -35,8 +35,7 @@ public class ScoreBoard {
 	}
 
 	public String printGameBoard() {
-		return "\n<<<<<<<<  SCORE BOARD  >>>>>>>>\n" + "===============================\n\nPoints    Nickname\n"
-				+ postOrderString(root)
+		return "\n<<<<<<<<  SCORE BOARD  >>>>>>>>\n" + "===============================\n\n" + postOrderString(root)
 				+ "\n===============================\n";
 	}
 
