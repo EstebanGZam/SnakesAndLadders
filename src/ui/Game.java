@@ -15,7 +15,7 @@ public class Game {
         reader = new Scanner(System.in);
     }
 
-    public static void main(String[] args) throws ZeroInputException {
+    public static void main(String[] args){
         System.out.println("<<<<< Welcome to snakes and ladders >>>>>");
         game.displayStartMenu();
     }
@@ -48,16 +48,12 @@ public class Game {
 
     public void executeOption(int option){
         switch (option) {
-            case 1:
+            case 1 -> {
                 generateBoard();
                 play();
-                break;
-            case 2:
-                System.out.println("\nThanks for using the program. Until next time!");
-                break;
-            default:
-                System.out.println("Error. Type a valid option.\n");
-                break;
+            }
+            case 2 -> System.out.println("\nThanks for using the program. Until next time!");
+            default -> System.out.println("Error. Type a valid option.\n");
         }
         if (option != 2)
             displayStartMenu();
@@ -89,22 +85,18 @@ public class Game {
                 snakes = validateInteger();
             System.out.print("Ladders: ");
                 ladders = validateInteger();
-                if ((snakes + ladders) >= max/2){
+                controller.generateGameBoard(rows, columns, snakes, ladders);
+                if ((snakes + ladders) >= max){
                  throw new InputOutOfBoardException("Ladders and snakes cannot be equal to or greater than half the board");
                 }
 
-        }catch (InputOutOfBoardException iobe){
+        }catch (InputOutOfBoardException | StackOverflowError iobe){
             System.out.println(iobe.getMessage());
             System.out.print("Type valid values for snakes and ladders: (Less Than " + max /2 + ")");
             
             validateBoard(rows, columns);
-        } catch (StackOverflowError ste){
-            System.out.println(ste.getMessage());
-            System.out.print("Type valid values for snakes and ladders: (Less Than " + max /2 + ")");
-
-            validateBoard(rows, columns);
         }
-        controller.generateGameBoard(rows, columns, snakes, ladders);
+
     }
 
     public void displaySecondaryMenu() {
@@ -128,18 +120,22 @@ public class Game {
         displaySecondaryMenu();
         option = validateInteger();
         switch (option) {
-            case 1:
+            case 1 -> {
                 System.out.println(controller.rollDice());
-                break;
-            case 2:
-                System.out.println(controller.printSnakesAndLadders());
-                break;
-            default:
-                System.out.println("Error. Type a valid option.\n");
-                break;
+                if (controller.matchFinished()) {
+                    winnerRegister();
+                }
+            }
+            case 2 -> System.out.println(controller.printSnakesAndLadders());
+            default -> System.out.println("Error. Type a valid option.\n");
         }
         if (!controller.matchFinished())
             play(option);
     }
 
+    public void winnerRegister() {
+        System.out.println("\n Type winner nick name: ");
+        String winnerNick = reader.next();
+        System.out.println(controller.addScoreRegistry(winnerNick));
+    }
 }

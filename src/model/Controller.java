@@ -1,6 +1,10 @@
 package model;
 
 public class Controller {
+	private ScoreBoard scoreBoard;
+	public Controller(){
+		scoreBoard = new ScoreBoard();
+	}
 
 	private GameBoard gameBoard;
 
@@ -38,7 +42,6 @@ public class Controller {
 	public String rollDice() {
 		String msg = gameBoard.rollDice();
 		if (matchFinished()) {
-			addScoreRegistry(gameBoard.getMatchScore());
 			msg += printScoreBoard();
 		}
 		return msg;
@@ -50,12 +53,17 @@ public class Controller {
 	}
 
 	public boolean matchFinished() {
-		if (gameBoard.getMatchScore() != 0)
-			return true;
-		return false;
+		return gameBoard.getMatchScore() != 0;
 	}
 
-	private void addScoreRegistry(long matchScore) {
+	public String addScoreRegistry(String winnerNick) {
+		return addScoreRegistry(winnerNick, gameBoard.getMatchScore());
+	}
+
+	private String addScoreRegistry(String winnerNick, long matchScore){
+
+		scoreBoard.addScore(new Score(winnerNick, matchScore));
+		return scoreBoard.inOrderString();
 	}
 
 	private String printScoreBoard() {

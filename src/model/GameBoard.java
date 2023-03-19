@@ -141,6 +141,7 @@ public class GameBoard {
 		} else if (current != null && current.equals(this.tail)) {
 			return null;
 		}
+		assert current != null;
 		return search(current.getNext(), slotNumber);
 	}
 
@@ -225,7 +226,6 @@ public class GameBoard {
 				return snakeHeadValue(value, from, end);
 			}
 		} catch (StackOverflowError e) {
-			System.out.println("Wait a minute...");
 			return -1;
 		}
 	}
@@ -256,11 +256,15 @@ public class GameBoard {
 	 * @param ladders   Amount of ladders to be added.
 	 */
 	private void addLadders(char character, int ladders) {
-		if (ladders > 0) {
-			int ladderFloorValue = ladderFloorValue(character, this.tail.getSlotNumber());
-			ladderCeilValue(character, ladderFloorValue, this.tail.getSlotNumber());
-			addLadders(++character, --ladders);
-		}
+			try {
+				if (ladders > 0) {
+					int ladderFloorValue = ladderFloorValue(character, this.tail.getSlotNumber());
+					ladderCeilValue(character, ladderFloorValue, this.tail.getSlotNumber());
+					addLadders(++character, --ladders);
+				}
+			}catch (NullPointerException e){
+				return;
+			}
 	}
 
 	/**
@@ -295,7 +299,6 @@ public class GameBoard {
 			}
 			return ladderFloorValue(character, end);
 		} catch (StackOverflowError e) {
-			System.out.println("Wait a minute...");
 			return -1;
 		}
 	}
@@ -314,11 +317,15 @@ public class GameBoard {
 	private int ladderCeilValue(char character, int from, int end) {
 		int ladderCeilValue = from + random.nextInt(end - from) + 1;
 		Slot ladderCeil = search(ladderCeilValue);
+		try{
 		if (ladderCeil.getLadder() == null && ladderCeil.getSnake() == null) {
 			ladderCeil.setLadder(character + "2");
 			return ladderCeilValue;
 		} else
-			return ladderCeilValue(character, from, end);
+			return ladderCeilValue(character, from, end);}
+		catch (NullPointerException e){
+			return -1;
+		}
 	}
 
 	private boolean checkNextSlotsAvailability(Slot current, boolean snakes) {
@@ -461,16 +468,12 @@ public class GameBoard {
 	}
 
 	public Player getCurrentPlayer() {
-		switch (currentPlayer) {
-			case 1:
-				return player1;
-			case 2:
-				return player2;
-			case 3:
-				return player3;
-			default:
-				return null;
-		}
+		return switch (currentPlayer) {
+			case 1 -> player1;
+			case 2 -> player2;
+			case 3 -> player3;
+			default -> null;
+		};
 	}
 
 	private int nextPlayer() {
