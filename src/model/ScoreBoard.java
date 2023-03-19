@@ -34,16 +34,17 @@ public class ScoreBoard {
 		}
 	}
 
-	public String inOrderString() {
-		return "\n<<<<<<<<  SCORES  >>>>>>>>\n" + "========================\n\n" + inOrderString(root)
-				+ "\n========================\n";
+	public String printGameBoard() {
+		return "\n<<<<<<<<  SCORE BOARD  >>>>>>>>\n" + "===============================\n\nPoints    Nickname\n"
+				+ postOrderString(root)
+				+ "\n===============================\n";
 	}
 
-	private String inOrderString(Score current) {
+	private String postOrderString(Score current) {
 		if (current == null) {
 			return "";
 		}
-		return inOrderString(current.getRight()) + current.toString() + inOrderString(current.getLeft());
+		return postOrderString(current.getRight()) + current.toString() + postOrderString(current.getLeft());
 	}
 
 }

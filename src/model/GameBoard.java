@@ -25,6 +25,7 @@ public class GameBoard {
 		this.columns = columns;
 		int numberOfSlots = rows * columns;
 		this.winner = false;
+		this.winner = false;
 		addSlots(numberOfSlots);
 		String symbols = generateRandomSymbols();
 		player1 = new Player(this.head, Character.getNumericValue(symbols.charAt(0)));
@@ -211,8 +212,8 @@ public class GameBoard {
 		if (snakeHead.getSnake() == null && snakeHead.getLadder() == null) {
 			snakeHead.setSnake(value + "B");
 			return snakeHeadValue;
-		} else
-			return snakeHeadValue(value, from, end);
+		}
+		return snakeHeadValue(value, from, end);
 	}
 
 	/**
@@ -286,8 +287,8 @@ public class GameBoard {
 		if (ladderCeil.getLadder() == null && ladderCeil.getSnake() == null) {
 			ladderCeil.setLadder(character + "2");
 			return ladderCeilValue;
-		} else
-			return ladderCeilValue(character, from, end);
+		}
+		return ladderCeilValue(character, from, end);
 	}
 
 	private boolean checkNextSlotsAvailability(Slot current, boolean snakes) {
@@ -298,7 +299,6 @@ public class GameBoard {
 				return true;
 			}
 			return checkNextSlotsAvailability(current.getNext(), snakes);
-
 		}
 		return false;
 	}
@@ -408,7 +408,7 @@ public class GameBoard {
 	 * <b>Description:</b> Select random number, call movePlayer method to current
 	 * player and
 	 * refresh the current player. <br>
-	 * 
+	 *
 	 * @return int dice: Represent a message with dice number, current player and
 	 *         if player uses a snake or ladder.
 	 */
@@ -462,7 +462,7 @@ public class GameBoard {
 	 * new
 	 * position. <br>
 	 *
-	 * 
+	 *
 	 * @param player
 	 * @param diceNumber
 	 */

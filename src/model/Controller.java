@@ -60,7 +60,7 @@ public class Controller {
 
     private String addScoreRegistry(String winnerNick, long matchScore) {
         scoreBoard.addScore(new Score(winnerNick, matchScore));
-        return scoreBoard.inOrderString();
+        return scoreBoard.printGameBoard();
     }
 
 }

@@ -9,15 +9,15 @@ public class Player {
 		this.slot = slot;
 		setRandomSymbol(number);
 	}
-	
-	/** 
+
+	/**
 	 * @return Slot
 	 */
 	public Slot getSlot() {
 		return slot;
 	}
-	
-	/** 
+
+	/**
 	 * @return char
 	 */
 	public char getSymbol() {
@@ -63,10 +63,10 @@ public class Player {
 		this.slot = slot;
 	}
 
-	public int checkSlot(){
+	public int checkSlot() {
 		if (this.slot.getLadder() != null) {
 			return 1;
-		}else if(this.slot.getSnake() != null){
+		} else if (this.slot.getSnake() != null) {
 			return 2;
 		}
 		return 0;

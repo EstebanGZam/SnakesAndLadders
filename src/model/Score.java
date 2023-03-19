@@ -52,13 +52,13 @@ public class Score {
 		if (this.names.split("\n").length > 1) {
 			return toString(this.names.split("\n"), 0);
 		}
-		return this.score + " " + this.names + "\n";
+		return this.score + "      " + this.names + "\n";
 	}
 
 	public String toString(String[] records, int index) {
 		if (index == records.length)
 			return "";
-		return this.score + " " + records[index] + "\n" + toString(records, ++index);
+		return this.score + "      " + records[index] + "\n" + toString(records, ++index);
 	}
 
 }
